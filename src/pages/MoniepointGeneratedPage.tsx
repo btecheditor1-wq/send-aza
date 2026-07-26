@@ -30,15 +30,15 @@ interface ReceiptData {
   providerRef: string;
 }
 
-// Helper to generate precise, uniform perforated receipt tear line (12px semicircle cutouts, 6px depth, 4px gap)
+// Helper to generate precise, uniform perforated receipt tear line (15 large cuts across 450px width)
 const generatePerforatedCutPath = (width = 450) => {
-  const holeRadius = 6;
-  const holeDiameter = 12;
-  const gap = 4;
-  const step = holeDiameter + gap; // 16px
+  const holeRadius = 11;
+  const holeDiameter = 22;
+  const gap = 8;
+  const step = holeDiameter + gap; // 30px => exactly 15 cuts for 450px!
   const count = Math.ceil(width / step);
 
-  let d = `M 0 0 L 0 6 `;
+  let d = `M 0 0 L 0 ${holeRadius} `;
   for (let i = 0; i < count; i++) {
     const xStart = i * step;
     const xHoleEnd = Math.min(xStart + holeDiameter, width);
@@ -47,15 +47,15 @@ const generatePerforatedCutPath = (width = 450) => {
     if (xStart >= width) break;
 
     if (xHoleEnd <= width) {
-      d += `A ${holeRadius} ${holeRadius} 0 0 1 ${xHoleEnd} 6 `;
+      d += `A ${holeRadius} ${holeRadius} 0 0 1 ${xHoleEnd} ${holeRadius} `;
     } else {
       const dx = width - xStart;
-      const yVal = 6 - Math.sqrt(Math.max(0, holeRadius * holeRadius - Math.pow(dx - holeRadius, 2)));
+      const yVal = holeRadius - Math.sqrt(Math.max(0, holeRadius * holeRadius - Math.pow(dx - holeRadius, 2)));
       d += `A ${holeRadius} ${holeRadius} 0 0 1 ${width} ${yVal} `;
     }
 
     if (xStepEnd > xHoleEnd) {
-      d += `L ${xStepEnd} 6 `;
+      d += `L ${xStepEnd} ${holeRadius} `;
     }
   }
   d += `L ${width} 0 Z`;
@@ -494,8 +494,8 @@ Ref: ${data.transRef}`;
             {/* SCALLOPED / PERFORATED WHITE RECEIPT TEAR AT BOTTOM */}
             <div className="w-full leading-none overflow-hidden select-none pointer-events-none -mt-[1px]">
               <svg
-                className="w-full h-[6px] block text-white fill-current"
-                viewBox="0 0 450 6"
+                className="w-full h-[12px] block text-white fill-current"
+                viewBox="0 0 450 12"
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
