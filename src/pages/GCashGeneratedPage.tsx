@@ -168,26 +168,26 @@ export const GCashGeneratedPage: React.FC = () => {
         </div>
 
         {/* Receipt Display Wrapper */}
-        <div className="flex justify-center overflow-x-auto py-2 px-1">
-          {/* PHONE FRAME (Exact 375px x 812px per template) */}
+        <div className="w-full flex justify-center py-2 px-0 sm:px-1">
+          {/* PHONE FRAME (Exact 375px template scaled for full screen mobile) */}
           <div
             ref={phoneFrameRef}
             id="gcash-receipt-card"
-            className="w-[375px] h-[812px] bg-[#3b5bfd] relative overflow-hidden shrink-0 shadow-2xl rounded-2xl sm:rounded-3xl select-none text-left"
+            className="w-full max-w-[375px] bg-[#3b5bfd] relative overflow-hidden shrink-0 shadow-2xl rounded-2xl sm:rounded-3xl select-none text-left"
             style={{
               fontFamily:
                 "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
             }}
           >
             {/* ===== HEADER ===== */}
-            <div className="h-[180px] px-4 flex items-center justify-center relative">
-              <span className="text-white text-[17px] font-semibold tracking-[0.2px]">
+            <div className="h-[150px] sm:h-[180px] px-4 flex items-center justify-center relative">
+              <span className="text-white text-[15px] sm:text-[17px] font-semibold tracking-[0.2px]">
                 Express Send
               </span>
               <button
                 type="button"
                 onClick={() => navigate('/gcash/receipt')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-transparent border-none text-white text-[24px] font-light cursor-pointer w-7 h-7 flex items-center justify-center leading-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-transparent border-none text-white text-[22px] font-light cursor-pointer w-7 h-7 flex items-center justify-center leading-none"
               >
                 &times;
               </button>
@@ -195,12 +195,12 @@ export const GCashGeneratedPage: React.FC = () => {
 
             {/* ===== WHITE CARD ===== */}
             <div
-              className="bg-white rounded-t-[16px] m-0 relative min-h-[calc(812px-180px)] pb-0"
+              className="bg-white rounded-t-[16px] m-0 relative min-h-[calc(100%-150px)] sm:min-h-[calc(812px-180px)] pb-6"
             >
               {/* ===== CHECK ICON ===== */}
-              <div className="flex justify-center -mt-[28px] relative z-10">
+              <div className="flex justify-center -mt-[26px] relative z-10">
                 <div
-                  className="w-[56px] h-[56px] bg-[#3b5bfd] rounded-full flex items-center justify-center border-4 border-white"
+                  className="w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] bg-[#3b5bfd] rounded-full flex items-center justify-center border-4 border-white"
                   style={{
                     boxShadow: '0 2px 16px rgba(59, 91, 253, 0.25)',
                   }}
@@ -212,7 +212,7 @@ export const GCashGeneratedPage: React.FC = () => {
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="w-6 h-6"
+                    className="w-5 h-5 sm:w-6 sm:h-6"
                   >
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
@@ -220,29 +220,29 @@ export const GCashGeneratedPage: React.FC = () => {
               </div>
 
               {/* ===== RECIPIENT INFO ===== */}
-              <div className="text-center pt-[20px] px-[24px] pb-0">
-                <div className="text-[18px] font-bold text-[#1a2b4a] mb-[10px] tracking-[0.3px]">
+              <div className="text-center pt-[16px] px-[20px] pb-0">
+                <div className="text-[16px] sm:text-[18px] font-bold text-[#1a2b4a] mb-[8px] tracking-[0.3px]">
                   {receiptData.recipientName}
                 </div>
-                <div className="inline-block bg-[#f0f2f8] rounded-[20px] px-[16px] py-[6px] mb-[8px]">
-                  <span className="text-[15px] font-semibold text-[#4a5568] tracking-[0.4px]">
+                <div className="inline-block bg-[#f0f2f8] rounded-[20px] px-[14px] py-[4px] sm:py-[6px] mb-[6px]">
+                  <span className="text-[13.5px] sm:text-[15px] font-semibold text-[#4a5568] tracking-[0.4px]">
                     {receiptData.recipientNumber}
                   </span>
                 </div>
-                <div className="text-[12px] text-[#a0aec0] mt-[2px] font-normal">
+                <div className="text-[11px] sm:text-[12px] text-[#a0aec0] mt-[2px] font-normal">
                   Sent via GCash
                 </div>
               </div>
 
               {/* ===== DIVIDER 1 ===== */}
-              <div className="border-t border-[#e8ecf4] mt-[40px] mx-[16px] mb-0" />
+              <div className="border-t border-[#e8ecf4] mt-[32px] mx-[16px] mb-0" />
 
               {/* ===== AMOUNT ROW ===== */}
-              <div className="flex justify-between items-center pt-[24px] px-[16px] pb-[16px]">
-                <span className="text-[14px] font-medium text-[#2d3748]">
+              <div className="flex justify-between items-center pt-[20px] px-[16px] pb-[14px]">
+                <span className="text-[13px] sm:text-[14px] font-medium text-[#2d3748]">
                   Amount
                 </span>
-                <span className="text-[16px] font-semibold text-[#1a202c]">
+                <span className="text-[15px] sm:text-[16px] font-semibold text-[#1a202c]">
                   {rawAmount.replace(/^₱/, '')}
                 </span>
               </div>
@@ -251,42 +251,42 @@ export const GCashGeneratedPage: React.FC = () => {
               <div className="border-t border-[#d1d5db] mx-[16px] my-0" />
 
               {/* ===== TOTAL ROW ===== */}
-              <div className="flex justify-between items-center pt-[20px] px-[16px] pb-[20px]">
-                <span className="text-[14px] font-semibold text-[#2d3748]">
+              <div className="flex justify-between items-center pt-[16px] px-[16px] pb-[16px]">
+                <span className="text-[13px] sm:text-[14px] font-semibold text-[#2d3748]">
                   Total Amount Sent
                 </span>
-                <span className="text-[20px] font-bold text-[#1a202c]">
+                <span className="text-[18px] sm:text-[20px] font-bold text-[#1a202c]">
                   {totalAmountStr}
                 </span>
               </div>
 
               {/* ===== REF ROW - TALL GRAY BACKGROUND ===== */}
-              <div className="bg-[#f4f6fa] m-0 px-[16px] py-[24px] flex justify-between items-start min-h-[140px]">
+              <div className="bg-[#f4f6fa] m-0 px-[16px] py-[20px] flex justify-between items-start min-h-[120px]">
                 <div className="flex items-center gap-[2px]">
-                  <span className="text-[11px] text-[#718096] font-normal">
+                  <span className="text-[10px] sm:text-[11px] text-[#718096] font-normal">
                     Ref No.&nbsp;
                   </span>
-                  <span className="text-[11px] text-[#4a5568] font-medium">
+                  <span className="text-[10px] sm:text-[11px] text-[#4a5568] font-medium">
                     {receiptData.refNumber}
                   </span>
                 </div>
-                <span className="text-[11px] text-[#4a5568] font-medium">
+                <span className="text-[10px] sm:text-[11px] text-[#4a5568] font-medium">
                   {receiptData.customDate}
                 </span>
               </div>
 
               {/* ===== CARBON CARD ===== */}
               <div
-                className="mt-[24px] mx-[16px] mb-0 rounded-[12px] px-[16px] py-[14px]"
+                className="mt-[20px] mx-[16px] mb-0 rounded-[12px] px-[14px] py-[12px]"
                 style={{
                   background:
                     'linear-gradient(135deg, #6ee7b7 0%, #34d399 100%)',
                 }}
               >
-                <div className="text-[13px] font-bold text-[#065f46] mb-[6px]">
+                <div className="text-[12px] sm:text-[13px] font-bold text-[#065f46] mb-[4px]">
                   {receiptData.carbonText}
                 </div>
-                <div className="text-[11px] text-[#047857] leading-[1.5] font-normal">
+                <div className="text-[10px] sm:text-[11px] text-[#047857] leading-[1.4] font-normal">
                   By going digital, you reduce your carbon footprint from
                   transportation, paper, and plasti...
                 </div>

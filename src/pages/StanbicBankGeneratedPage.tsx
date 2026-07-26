@@ -280,18 +280,18 @@ export const StanbicBankGeneratedPage: React.FC = () => {
             </div>
 
             {/* TITLE & DATE */}
-            <h3 style={{ margin: '6px 0 2px', fontSize: '18px', fontWeight: 600, color: '#000000' }}>
+            <h3 style={{ margin: '4px 0 2px', fontSize: '15px', fontWeight: 600, color: '#000000' }}>
               Online Transaction Receipt
             </h3>
-            <div className="date" style={{ fontSize: '12px', color: '#666666', marginBottom: '6px' }}>
+            <div className="date" style={{ fontSize: '11px', color: '#666666', marginBottom: '6px' }}>
               {dateTimeDisplay}
             </div>
 
             {/* DIVIDER */}
-            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '8px 0' }}></div>
+            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '6px 0' }}></div>
 
             {/* ROW 1: TRANSACTION */}
-            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '12.5px', margin: '2px 0' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '11.5px', margin: '2px 0' }}>
               <div className="label" style={{ color: '#222222' }}>TRANSACTION</div>
               <div className="value" style={{ textAlign: 'right', fontWeight: 500, color: '#000000' }}>
                 <div id="amount" style={{ marginBottom: '1px' }}>{amountDisplay}</div>
@@ -301,10 +301,10 @@ export const StanbicBankGeneratedPage: React.FC = () => {
             </div>
 
             {/* DIVIDER */}
-            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '8px 0' }}></div>
+            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '6px 0' }}></div>
 
             {/* ROW 2: BENEFICIARY */}
-            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '12.5px', margin: '2px 0' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '11.5px', margin: '2px 0' }}>
               <div className="label" style={{ color: '#222222' }}>BENEFICIARY</div>
               <div className="value" style={{ textAlign: 'right', fontWeight: 500, color: '#000000' }}>
                 <div id="beneficiary" style={{ marginBottom: '1px' }}>{receiptData.receiverName}</div>
@@ -314,10 +314,10 @@ export const StanbicBankGeneratedPage: React.FC = () => {
             </div>
 
             {/* DIVIDER */}
-            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '8px 0' }}></div>
+            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '6px 0' }}></div>
 
             {/* ROW 3: SENDER */}
-            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '12.5px', margin: '2px 0' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '11.5px', margin: '2px 0' }}>
               <div className="label" style={{ color: '#222222' }}>SENDER</div>
               <div className="value" style={{ textAlign: 'right', fontWeight: 500, color: '#000000' }}>
                 <div id="sender" style={{ marginBottom: '1px' }}>{receiptData.senderName}</div>
@@ -327,19 +327,19 @@ export const StanbicBankGeneratedPage: React.FC = () => {
             </div>
 
             {/* DIVIDER */}
-            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '8px 0' }}></div>
+            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '6px 0' }}></div>
 
             {/* ROW 4: STATUS */}
-            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '12.5px', margin: '2px 0' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '11.5px', margin: '2px 0' }}>
               <div className="label" style={{ color: '#222222' }}>STATUS</div>
               <div className="value status" style={{ textAlign: 'right', fontWeight: 600, color: '#000000' }}>SUCCESSFUL</div>
             </div>
 
             {/* DIVIDER */}
-            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '8px 0' }}></div>
+            <div className="divider" style={{ borderBottom: '2px solid #2e3aa1', margin: '6px 0' }}></div>
 
             {/* ROW 5: NARRATION */}
-            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '12.5px', margin: '2px 0' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '11.5px', margin: '2px 0' }}>
               <div className="label" style={{ color: '#222222' }}>NARRATION</div>
               <div className="value" id="narration" style={{ textAlign: 'right', fontWeight: 500, color: '#000000' }}>
                 {receiptData.narration}
@@ -351,10 +351,10 @@ export const StanbicBankGeneratedPage: React.FC = () => {
               className="notice"
               style={{
                 background: '#e6f0fb',
-                padding: '12px',
-                marginTop: '14px',
-                fontSize: '12px',
-                lineHeight: 1.45,
+                padding: '10px 12px',
+                marginTop: '12px',
+                fontSize: '10.5px',
+                lineHeight: 1.4,
                 color: '#1c2c8c',
               }}
             >

@@ -193,9 +193,9 @@ export const AccessBankGeneratedPage: React.FC = () => {
             id="access-bank-receipt-card"
             style={{
               width: '100%',
-              maxWidth: '520px',
+              maxWidth: '480px',
               backgroundColor: '#ffffff',
-              padding: '30px 35px 25px',
+              padding: '20px 16px 18px',
               color: '#1E2F8E',
               fontFamily: 'Arial, Helvetica, sans-serif',
               borderRadius: '8px',
