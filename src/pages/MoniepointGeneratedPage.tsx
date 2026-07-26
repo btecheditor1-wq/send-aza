@@ -154,6 +154,16 @@ export const MoniepointGeneratedPage: React.FC = () => {
     maximumFractionDigits: 2,
   });
 
+  const getAmountFontSize = (amountStr: string) => {
+    const fullStr = '₦' + amountStr;
+    const len = fullStr.length;
+    if (len > 15) return '20px';
+    if (len > 13) return '24px';
+    if (len > 11) return '28px';
+    if (len > 9) return '32px';
+    return '36px';
+  };
+
   const formattedDateTime = getFormattedDateTime(data.date, data.time);
 
   const handleDownload = async () => {
@@ -367,8 +377,11 @@ Ref: ${data.transRef}`;
                     DEBIT
                   </div>
                   <div
-                    className="mt-[8px] text-[36px] font-[800] tracking-[-0.5px] text-[#000000] leading-none whitespace-nowrap overflow-hidden text-ellipsis"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    className="mt-[8px] font-[800] tracking-[-0.5px] text-[#000000] leading-none whitespace-nowrap"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: getAmountFontSize(formattedAmount),
+                    }}
                   >
                     ₦{formattedAmount}
                   </div>
