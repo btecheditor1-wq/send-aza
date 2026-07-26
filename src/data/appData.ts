@@ -178,7 +178,7 @@ export const NIGERIA_BANKS: SelectionItem[] = [
   {
     id: 'stanbic',
     name: 'Stanbic IBTC',
-    image: '/assets/stanbic.png',
+    image: '/logo.png',
     available: true,
     targetPath: '/nigeria-banks/stanbic/receipt',
     subtext: 'Stanbic IBTC Mobile Banking',
@@ -207,7 +207,7 @@ export const NIGERIA_BANKS: SelectionItem[] = [
   {
     id: 'moniepoint',
     name: 'Moniepoint',
-    image: '/assets/moniepoint.png',
+    image: '/moniepoint.png',
     available: true,
     targetPath: '/nigeria-banks/moniepoint/receipt',
     subtext: 'Moniepoint MFB',

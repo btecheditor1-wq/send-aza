@@ -190,7 +190,7 @@ export const AccessBankGeneratedPage: React.FC = () => {
         >
           <div
             ref={receiptRef}
-            id="receipt-card"
+            id="access-bank-receipt-card"
             style={{
               width: '100%',
               maxWidth: '520px',

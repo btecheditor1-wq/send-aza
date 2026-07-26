@@ -72,32 +72,62 @@ export const GCashGeneratedPage: React.FC = () => {
     if (!phoneFrameRef.current) return;
     setIsDownloading(true);
 
+    const styleElements = Array.from(document.querySelectorAll('style'));
+    const originalTexts = styleElements.map((s) => s.textContent);
+
     try {
-      const dataUrl = await toPng(phoneFrameRef.current, {
-        cacheBust: true,
-        quality: 1.0,
-        pixelRatio: 3,
+      styleElements.forEach((s) => {
+        if (s.textContent && (s.textContent.includes('oklab') || s.textContent.includes('oklch'))) {
+          s.textContent = s.textContent
+            .replace(/oklab\([^)]+\)/g, 'transparent')
+            .replace(/oklch\([^)]+\)/g, 'transparent');
+        }
       });
-      const link = document.createElement('a');
-      link.download = `gcash-express-send-${receiptData.refNumber}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch {
+
+      const fileName = `gcash-express-send-${receiptData.refNumber}.png`;
+
       try {
         const canvas = await html2canvas(phoneFrameRef.current, {
           scale: 3,
           useCORS: true,
+          allowTaint: true,
           backgroundColor: '#3b5bfd',
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+        });
+        const dataUrl = canvas.toDataURL('image/png', 1.0);
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (h2cErr) {
+        console.warn('html2canvas error, using toPng fallback:', h2cErr);
+        const dataUrl = await toPng(phoneFrameRef.current, {
+          quality: 1.0,
+          pixelRatio: 3,
+          cacheBust: true,
+          backgroundColor: '#3b5bfd',
+          style: { transform: 'none' },
         });
         const link = document.createElement('a');
-        link.download = `gcash-express-send-${receiptData.refNumber}.png`;
-        link.href = canvas.toDataURL('image/png');
+        link.download = fileName;
+        link.href = dataUrl;
+        document.body.appendChild(link);
         link.click();
-      } catch (err) {
-        console.error('Failed to download image', err);
-        alert('Could not generate receipt image. Please try taking a screenshot.');
+        document.body.removeChild(link);
       }
+    } catch (err) {
+      console.error('Failed to download image', err);
+      alert('Could not generate receipt image. Please try taking a screenshot.');
     } finally {
+      styleElements.forEach((s, idx) => {
+        if (originalTexts[idx] !== null) {
+          s.textContent = originalTexts[idx];
+        }
+      });
       setIsDownloading(false);
     }
   };
@@ -106,12 +136,12 @@ export const GCashGeneratedPage: React.FC = () => {
     <div className="min-h-screen bg-slate-900 text-white pb-16">
       <Navbar showBack={true} />
 
-      <div className="max-w-xl mx-auto px-4 pt-6 space-y-6">
+      <div className="max-w-xl mx-auto px-2 sm:px-4 pt-4 sm:pt-6 space-y-5">
         {/* Action Controls Header */}
-        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 backdrop-blur-md shadow-xl">
+        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/80 rounded-2xl p-3.5 sm:p-4 backdrop-blur-md shadow-xl">
           <button
             onClick={() => navigate('/gcash/receipt')}
-            className="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 sm:gap-2 text-xs font-bold text-slate-300 hover:text-white transition-colors"
           >
             <Edit3 className="w-4 h-4 text-blue-400" />
             <span>Edit Details</span>
@@ -138,11 +168,12 @@ export const GCashGeneratedPage: React.FC = () => {
         </div>
 
         {/* Receipt Display Wrapper */}
-        <div className="flex justify-center overflow-x-auto py-2">
+        <div className="flex justify-center overflow-x-auto py-2 px-1">
           {/* PHONE FRAME (Exact 375px x 812px per template) */}
           <div
             ref={phoneFrameRef}
-            className="w-[375px] h-[812px] bg-[#3b5bfd] relative overflow-hidden shrink-0 shadow-2xl rounded-none select-none text-left"
+            id="gcash-receipt-card"
+            className="w-[375px] h-[812px] bg-[#3b5bfd] relative overflow-hidden shrink-0 shadow-2xl rounded-2xl sm:rounded-3xl select-none text-left"
             style={{
               fontFamily:
                 "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",

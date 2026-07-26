@@ -120,12 +120,12 @@ export const MoniepointReceiptPage: React.FC = () => {
           <div className="flex justify-center">
             <div className="w-20 h-20 rounded-3xl bg-white p-3 shadow-xl shadow-blue-600/10 border border-slate-200/80 flex items-center justify-center overflow-hidden">
               <img
-                src="/moniepoint.png"
+                src="/assets/moniepoint.png"
                 alt="Moniepoint Logo"
                 className="w-full h-full object-contain"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/assets/moniepoint.png';
+                  e.currentTarget.src = '/moniepoint.png';
                 }}
               />
             </div>
@@ -154,12 +154,12 @@ export const MoniepointReceiptPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white p-1.5 flex items-center justify-center overflow-hidden shadow-xs border border-slate-200">
                 <img
-                  src="/moniepoint.png"
+                  src="/assets/moniepoint.png"
                   alt="Moniepoint"
                   className="w-full h-full object-contain"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/assets/moniepoint.png';
+                    e.currentTarget.src = '/moniepoint.png';
                   }}
                 />
               </div>
@@ -344,21 +344,6 @@ export const MoniepointReceiptPage: React.FC = () => {
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-semibold text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
               />
             </div>
-          </div>
-
-          {/* Narration (Optional) */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-blue-600" />
-              <span>Narration (Optional)</span>
-            </label>
-            <input
-              type="text"
-              value={narration}
-              onChange={(e) => setNarration(e.target.value)}
-              placeholder="e.g. Payment for items"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-semibold text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
-            />
           </div>
 
           {/* Auto generated reference note */}

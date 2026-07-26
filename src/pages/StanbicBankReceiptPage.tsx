@@ -109,12 +109,15 @@ export const StanbicBankReceiptPage: React.FC = () => {
         >
           {/* Stanbic Bank Logo Centered at Top */}
           <div className="flex justify-center">
-            <div className="w-20 h-20 rounded-3xl bg-[#0033A0] p-3 shadow-lg shadow-blue-900/20 border border-blue-800 flex items-center justify-center overflow-hidden">
-              <ItemLogo
-                id="stanbic"
-                name="Stanbic IBTC"
-                fallbackImage="/assets/stanbic.png"
+            <div className="w-20 h-20 rounded-3xl bg-white p-3 shadow-xl shadow-blue-600/10 border border-slate-200/80 flex items-center justify-center overflow-hidden">
+              <img
+                src="/assets/logo.png"
+                alt="Stanbic IBTC Logo"
                 className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/logo.png';
+                }}
               />
             </div>
           </div>
@@ -140,12 +143,15 @@ export const StanbicBankReceiptPage: React.FC = () => {
           {/* Stanbic Bank Form Header Badge */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0033A0] border border-blue-900 p-1.5 flex items-center justify-center overflow-hidden shadow-xs">
-                <ItemLogo
-                  id="stanbic"
-                  name="Stanbic IBTC"
-                  fallbackImage="/assets/stanbic.png"
+              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center overflow-hidden shadow-xs">
+                <img
+                  src="/assets/logo.png"
+                  alt="Stanbic IBTC"
                   className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/logo.png';
+                  }}
                 />
               </div>
               <div>

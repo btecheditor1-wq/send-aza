@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface ItemLogoProps {
   id: string;
@@ -8,7 +8,59 @@ interface ItemLogoProps {
 }
 
 export const ItemLogo: React.FC<ItemLogoProps> = ({ id, name, fallbackImage, className = 'w-full h-full' }) => {
+  const [imgError, setImgError] = useState(false);
   const cleanId = id ? id.toLowerCase() : '';
+
+  // Moniepoint primary logo
+  if (cleanId === 'moniepoint' && !imgError) {
+    return (
+      <img
+        src="/assets/moniepoint.png"
+        alt="Moniepoint"
+        className={`${className} object-contain`}
+        onError={(e) => {
+          const target = e.currentTarget;
+          if (target.src.endsWith('/assets/moniepoint.png')) {
+            target.src = '/moniepoint.png';
+          } else {
+            setImgError(true);
+          }
+        }}
+      />
+    );
+  }
+
+  // Stanbic IBTC primary logo
+  if (cleanId === 'stanbic' && !imgError) {
+    return (
+      <img
+        src="/assets/logo.png"
+        alt="Stanbic IBTC"
+        className={`${className} object-contain`}
+        onError={(e) => {
+          const target = e.currentTarget;
+          if (target.src.endsWith('/assets/logo.png')) {
+            target.src = '/logo.png';
+          } else {
+            setImgError(true);
+          }
+        }}
+      />
+    );
+  }
+
+  // Attempt PNG image from assets if not errored
+  const candidateImg = fallbackImage || `/assets/${cleanId}.png`;
+  if (!imgError && candidateImg) {
+    return (
+      <img
+        src={candidateImg}
+        alt={name}
+        className={`${className} object-contain`}
+        onError={() => setImgError(true)}
+      />
+    );
+  }
 
   switch (cleanId) {
     case 'nigeria':
@@ -205,12 +257,12 @@ export const ItemLogo: React.FC<ItemLogoProps> = ({ id, name, fallbackImage, cla
     case 'moniepoint':
       return (
         <img
-          src="/moniepoint.png"
+          src="/assets/moniepoint.png"
           alt="Moniepoint"
           className={`${className} object-contain`}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = '/assets/moniepoint.png';
+            e.currentTarget.src = '/moniepoint.png';
           }}
         />
       );
@@ -227,12 +279,12 @@ export const ItemLogo: React.FC<ItemLogoProps> = ({ id, name, fallbackImage, cla
     case 'stanbic':
       return (
         <img
-          src="/logo.png"
+          src="/assets/logo.png"
           alt="Stanbic IBTC"
           className={`${className} object-contain`}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = '/assets/stanbic.png';
+            e.currentTarget.src = '/logo.png';
           }}
         />
       );

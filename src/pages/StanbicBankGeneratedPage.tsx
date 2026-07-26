@@ -255,7 +255,7 @@ export const StanbicBankGeneratedPage: React.FC = () => {
         >
           <div
             ref={receiptRef}
-            id="receipt"
+            id="stanbic-receipt-card"
             className="w-full max-w-[420px] bg-white text-[#000] p-4 box-border shadow-md rounded-sm"
             style={{
               width: '100%',
@@ -269,12 +269,12 @@ export const StanbicBankGeneratedPage: React.FC = () => {
             {/* LOGO */}
             <div className="logo" style={{ textAlign: 'right' }}>
               <img
-                src="/logo.png"
+                src="/assets/logo.png"
                 alt="Stanbic Logo"
                 style={{ width: '58px', display: 'inline-block' }}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/assets/stanbic.png';
+                  e.currentTarget.src = '/logo.png';
                 }}
               />
             </div>

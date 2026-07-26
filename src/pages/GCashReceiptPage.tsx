@@ -296,21 +296,6 @@ export const GCashReceiptPage: React.FC = () => {
             />
           </div>
 
-          {/* Carbon Footprint */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-              <Leaf className="w-4 h-4 text-emerald-600" />
-              <span>Carbon Savings</span>
-            </label>
-            <input
-              type="text"
-              value={carbonText}
-              onChange={(e) => setCarbonText(e.target.value)}
-              placeholder="131g (gCO2e)"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-            />
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
