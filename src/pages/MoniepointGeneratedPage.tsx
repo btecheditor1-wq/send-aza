@@ -394,97 +394,97 @@ Ref: ${data.transRef}`;
               </div>
 
               {/* PANEL WITH TRANSACTION DETAILS */}
-              <div className="bg-[#F3F5F9] rounded-[18px] px-[18px] py-[6px]">
+              <div className="bg-[#F3F5F9] rounded-[18px] px-[16px] py-[4px]">
                 {/* Row 1: Transaction Type */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Transaction Type
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[12px] font-[600] bg-[#E2ECFF] text-[#005AE8]">
+                    <span className="inline-flex items-center justify-center px-[9px] py-[3.5px] rounded-[5px] text-[11.5px] font-[600] bg-[#E2ECFF] text-[#005AE8]">
                       {data.transactionType || 'Transfer'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 2: Transaction Status */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Transaction Status
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[12px] font-[600] bg-[#DCF5E3] text-[#15A047]">
+                    <span className="inline-flex items-center justify-center px-[9px] py-[3.5px] rounded-[5px] text-[11.5px] font-[600] bg-[#DCF5E3] text-[#15A047]">
                       {data.transactionStatus || 'Successful'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 3: Sender Name */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Sender Name
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.senderName}
                   </span>
                 </div>
 
                 {/* Row 4: Source Institution */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Source Institution
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.sourceInstitution || 'MONIEPOINT'}
                   </span>
                 </div>
 
                 {/* Row 5: Beneficiary */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Beneficiary
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.beneficiaryName} | {data.beneficiaryAccount}
                   </span>
                 </div>
 
                 {/* Row 6: Beneficiary Institution */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Beneficiary Institution
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.beneficiaryInstitution}
                   </span>
                 </div>
 
                 {/* Row 7: Transaction Date */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Transaction Date
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {formattedDateTime}
                   </span>
                 </div>
 
                 {/* Row 8: Transaction Reference */}
-                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Transaction Reference
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.transRef}
                   </span>
                 </div>
 
                 {/* Row 9: Provider Reference */}
-                <div className="py-[11px] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
+                <div className="py-[9px] flex flex-col items-start">
+                  <span className="text-[12px] font-[400] text-[#8D8D8D] mb-[3px]">
                     Provider Reference
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
+                  <span className="text-[13px] font-[500] text-[#1A1A1A] leading-snug whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.providerRef}
                   </span>
                 </div>
