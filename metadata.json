@@ -1,0 +1,6 @@
+{
+  "name": "Send Aza",
+  "description": "A premium, mobile-first banking and money transfer application UI with smooth animations and responsive navigation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

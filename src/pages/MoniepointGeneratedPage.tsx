@@ -1,0 +1,514 @@
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { motion } from 'motion/react';
+import {
+  ArrowLeft,
+  Download,
+  Share2,
+  Edit3,
+  CheckCircle2,
+  Copy,
+  Printer,
+} from 'lucide-react';
+import { toPng } from 'html-to-image';
+import html2canvas from 'html2canvas';
+import { Navbar } from '../components/Navbar';
+
+interface ReceiptData {
+  amount: string;
+  senderName: string;
+  sourceInstitution: string;
+  beneficiaryName: string;
+  beneficiaryAccount: string;
+  beneficiaryInstitution: string;
+  transactionType: string;
+  transactionStatus: string;
+  narration?: string;
+  date: string;
+  time: string;
+  transRef: string;
+  providerRef: string;
+}
+
+// Helper to generate precise, uniform perforated receipt tear line (18px semicircle cutouts, 9px depth, 4px gap)
+const generatePerforatedCutPath = (width = 390) => {
+  const holeRadius = 9;
+  const holeDiameter = 18;
+  const gap = 4;
+  const step = holeDiameter + gap; // 22px
+  const count = Math.ceil(width / step);
+
+  let d = `M 0 0 L 0 9 `;
+  for (let i = 0; i < count; i++) {
+    const xStart = i * step;
+    const xHoleEnd = Math.min(xStart + holeDiameter, width);
+    const xStepEnd = Math.min(xStart + step, width);
+
+    if (xStart >= width) break;
+
+    if (xHoleEnd <= width) {
+      d += `A ${holeRadius} ${holeRadius} 0 0 1 ${xHoleEnd} 9 `;
+    } else {
+      const dx = width - xStart;
+      const yVal = 9 - Math.sqrt(Math.max(0, holeRadius * holeRadius - Math.pow(dx - holeRadius, 2)));
+      d += `A ${holeRadius} ${holeRadius} 0 0 1 ${width} ${yVal} `;
+    }
+
+    if (xStepEnd > xHoleEnd) {
+      d += `L ${xStepEnd} 9 `;
+    }
+  }
+  d += `L ${width} 0 Z`;
+  return d;
+};
+
+export const MoniepointGeneratedPage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const receiptRef = useRef<HTMLDivElement>(null);
+
+  const [downloading, setDownloading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Retrieve data from location.state or sessionStorage
+  const [data, setData] = useState<ReceiptData | null>(() => {
+    if (location.state) {
+      return location.state as ReceiptData;
+    }
+    try {
+      const stored = sessionStorage.getItem('moniepoint_receipt_data');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    if (!data) {
+      // Default sample fallback data matching user screenshot
+      const sampleData: ReceiptData = {
+        amount: '190.00',
+        senderName: 'RAKIYA GEORGE',
+        sourceInstitution: 'MONIEPOINT',
+        beneficiaryName: 'MUHAMMAD BELLO',
+        beneficiaryAccount: '8062827392',
+        beneficiaryInstitution: 'MOMO PSB',
+        transactionType: 'Transfer',
+        transactionStatus: 'Successful',
+        date: '2026-07-07',
+        time: '12:46',
+        transRef: 'TRF|2MPTnej9u|2074459992691556352',
+        providerRef: '090405260707124618792512440126',
+      };
+      setData(sampleData);
+    }
+  }, [data]);
+
+  if (!data) return null;
+
+  // Format date: "Tuesday, July 7th, 2026 | 12:46 PM"
+  const getFormattedDateTime = (dateStr: string, timeStr: string) => {
+    try {
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day);
+
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const monthsOfYear = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+
+      const dayName = daysOfWeek[dateObj.getDay()] || 'Tuesday';
+      const monthName = monthsOfYear[dateObj.getMonth()] || 'July';
+
+      // Ordinal suffix (1st, 2nd, 3rd, 7th, etc.)
+      const getOrdinal = (n: number) => {
+        const s = ['th', 'st', 'nd', 'rd'];
+        const v = n % 100;
+        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+      };
+
+      const dayWithSuffix = getOrdinal(day || 7);
+
+      // Time formatting
+      let formattedTime = '12:46 PM';
+      if (timeStr) {
+        const [h, m] = timeStr.split(':').map(Number);
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const displayH = h % 12 || 12;
+        const displayM = String(m).padStart(2, '0');
+        formattedTime = `${displayH}:${displayM} ${ampm}`;
+      }
+
+      return `${dayName}, ${monthName} ${dayWithSuffix}, ${year || 2026} | ${formattedTime}`;
+    } catch {
+      return 'Tuesday, July 7th, 2026 | 12:46 PM';
+    }
+  };
+
+  const formattedAmount = Number(data.amount).toLocaleString('en-NG', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const formattedDateTime = getFormattedDateTime(data.date, data.time);
+
+  const handleDownload = async () => {
+    if (!receiptRef.current) return;
+    try {
+      setDownloading(true);
+      const fileName = `Moniepoint_Receipt_${(data?.beneficiaryName || 'Transaction').replace(/\s+/g, '_')}.png`;
+
+      // Sanitize document.head styles before html2canvas/toPng parses CSS rules to avoid Tailwind v4 oklab/oklch parser errors
+      const styleElements = Array.from(document.querySelectorAll('style'));
+      const originalTexts = styleElements.map((s) => s.textContent);
+
+      styleElements.forEach((s) => {
+        if (s.textContent && (s.textContent.includes('oklab') || s.textContent.includes('oklch'))) {
+          s.textContent = s.textContent
+            .replace(/oklab\([^)]+\)/g, 'transparent')
+            .replace(/oklch\([^)]+\)/g, 'transparent');
+        }
+      });
+
+      let dataUrl = '';
+
+      try {
+        const canvas = await html2canvas(receiptRef.current, {
+          scale: 3,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: null,
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          onclone: (clonedDoc) => {
+            const clonedCard = clonedDoc.querySelector('#moniepoint-receipt-card') as HTMLElement;
+            if (clonedCard) {
+              // Isolate clonedCard at top (0,0) of body to remove vertical scroll offsets or parent margin padding
+              clonedDoc.body.innerHTML = '';
+              clonedDoc.body.appendChild(clonedCard);
+
+              clonedDoc.body.style.margin = '0';
+              clonedDoc.body.style.padding = '0';
+              clonedDoc.body.style.width = '430px';
+              clonedDoc.body.style.backgroundColor = 'transparent';
+
+              clonedCard.style.position = 'relative';
+              clonedCard.style.top = '0';
+              clonedCard.style.left = '0';
+              clonedCard.style.margin = '0 auto';
+              clonedCard.style.transform = 'none';
+              clonedCard.style.width = '430px';
+              clonedCard.style.maxWidth = '430px';
+              clonedCard.style.minWidth = '430px';
+              clonedCard.style.borderRadius = '34px';
+              clonedCard.style.boxShadow = 'none';
+            }
+          },
+        });
+        dataUrl = canvas.toDataURL('image/png', 1.0);
+      } catch (h2cErr) {
+        console.warn('html2canvas error, using toPng fallback:', h2cErr);
+        dataUrl = await toPng(receiptRef.current, {
+          quality: 1.0,
+          pixelRatio: 3,
+          cacheBust: true,
+          backgroundColor: '#005AE8',
+          style: {
+            width: '430px',
+            maxWidth: '430px',
+            margin: '0',
+            transform: 'none',
+          },
+        });
+      } finally {
+        // Restore document style elements
+        styleElements.forEach((s, idx) => {
+          if (originalTexts[idx] !== null) {
+            s.textContent = originalTexts[idx];
+          }
+        });
+      }
+
+      if (dataUrl) {
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        throw new Error('Could not create data URL');
+      }
+    } catch (err) {
+      console.error('Download error:', err);
+      alert('Unable to download receipt image automatically. Please take a screenshot or try again.');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const handleCopy = () => {
+    const text = `MONIEPOINT TRANSACTION RECEIPT
+Amount: ₦${formattedAmount}
+Sender: ${data.senderName} (${data.sourceInstitution})
+Beneficiary: ${data.beneficiaryName} | ${data.beneficiaryAccount} (${data.beneficiaryInstitution})
+Status: ${data.transactionStatus}
+Date: ${formattedDateTime}
+Ref: ${data.transRef}`;
+
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-100 flex flex-col">
+      <Navbar />
+
+      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6 md:py-8 flex flex-col items-center">
+        {/* Navigation bar actions */}
+        <div className="w-full max-w-[430px] flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigate('/nigeria-banks/moniepoint/receipt')}
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3.5 py-2 rounded-xl shadow-xs border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Edit Form
+          </button>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopy}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3 py-2 rounded-xl shadow-xs border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Copy</span>
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={handleDownload}
+              disabled={downloading}
+              className="inline-flex items-center gap-1.5 text-xs font-black text-white bg-[#005AE8] px-4 py-2 rounded-xl shadow-md shadow-blue-600/20 hover:bg-blue-700 transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{downloading ? 'Exporting...' : 'Download PNG'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* RECEIPT WRAPPER - Pixel-perfect Moniepoint layout matching official branding */}
+        <motion.div
+          id="moniepoint-receipt-card"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2 }}
+          ref={receiptRef}
+          className="relative w-full max-w-[430px] bg-[#005AE8] pt-[36px] px-[20px] pb-[56px] overflow-hidden rounded-[34px] shadow-2xl text-slate-900 select-none my-auto"
+          style={{
+            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          }}
+        >
+          {/* BACKGROUND GOLD BRAND CURVES */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none z-0"
+            viewBox="0 0 430 880"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Top Right Arc Swoosh */}
+            <circle cx="410" cy="-20" r="160" stroke="#F5B400" strokeWidth="32" fill="none" />
+            {/* Left Mid Arc Accent */}
+            <circle cx="-40" cy="420" r="110" stroke="#F5B400" strokeWidth="26" fill="none" />
+            {/* Bottom Right Arc Swoosh */}
+            <circle cx="420" cy="850" r="120" stroke="#F5B400" strokeWidth="30" fill="none" />
+          </svg>
+
+          {/* HEADER BRANDING */}
+          <div className="relative z-10 pb-[28px] flex items-center justify-center gap-3">
+            {/* Moniepoint M logo badge */}
+            <div className="w-[52px] h-[52px] bg-white rounded-[16px] flex items-center justify-center shadow-xs shrink-0">
+              <span className="text-[#005AE8] text-[28px] font-[900] tracking-tighter leading-none select-none">M</span>
+            </div>
+
+            {/* Brand Titles */}
+            <div className="flex flex-col">
+              <h1 className="text-white text-[30px] font-[800] tracking-[-0.5px] leading-none">
+                Moniepoint
+              </h1>
+              <p className="mt-[5px] text-[8.5px] font-[700] tracking-[3.5px] text-white/90 uppercase">
+                MICROFINANCE BANK
+              </p>
+            </div>
+          </div>
+
+          {/* WHITE MAIN CARD */}
+          <div className="relative z-10">
+            {/* White Card Body */}
+            <div className="bg-white rounded-t-[28px] pt-[28px] px-[20px] pb-[4px]">
+              {/* TOP CARD SECTION: BADGE + AMOUNT + M ICON */}
+              <div className="flex justify-between items-start mb-[20px]">
+                <div>
+                  <div className="inline-flex items-center justify-center px-[12px] py-[6px] rounded-[6px] text-[12px] font-[700] tracking-[0.4px] bg-[#D6E4FF] text-[#005AE8] uppercase">
+                    DEBIT
+                  </div>
+                  <div className="mt-[10px] text-[40px] sm:text-[44px] font-[900] tracking-[-1.5px] text-[#0A0A0A] leading-none">
+                    ₦{formattedAmount}
+                  </div>
+                </div>
+
+                {/* Right Moniepoint Logo Badge */}
+                <div className="w-[50px] h-[50px] rounded-[15px] bg-[#005AE8] flex justify-center items-center shrink-0 shadow-xs">
+                  <span className="text-white text-[26px] font-[900] tracking-tighter leading-none select-none">M</span>
+                </div>
+              </div>
+
+              {/* PANEL WITH TRANSACTION DETAILS */}
+              <div className="bg-[#F3F6FA] rounded-[20px] px-[20px] py-[6px]">
+                {/* Row 1: Transaction Type */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[5px]">
+                    Transaction Type
+                  </span>
+                  <div>
+                    <span className="inline-flex items-center justify-center px-[12px] py-[5px] rounded-[6px] text-[13px] font-[700] bg-[#E2ECFF] text-[#005AE8]">
+                      {data.transactionType || 'Transfer'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Row 2: Transaction Status */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[5px]">
+                    Transaction Status
+                  </span>
+                  <div>
+                    <span className="inline-flex items-center justify-center px-[12px] py-[5px] rounded-[6px] text-[13px] font-[700] bg-[#DCF5E3] text-[#15A047]">
+                      {data.transactionStatus || 'Successful'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Row 3: Sender Name */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Sender Name
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                    {data.senderName}
+                  </span>
+                </div>
+
+                {/* Row 4: Source Institution */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Source Institution
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                    {data.sourceInstitution || 'MONIEPOINT'}
+                  </span>
+                </div>
+
+                {/* Row 5: Beneficiary */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Beneficiary
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                    {data.beneficiaryName} | {data.beneficiaryAccount}
+                  </span>
+                </div>
+
+                {/* Row 6: Beneficiary Institution */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Beneficiary Institution
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                    {data.beneficiaryInstitution}
+                  </span>
+                </div>
+
+                {/* Row 7: Transaction Date */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Transaction Date
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug">
+                    {formattedDateTime}
+                  </span>
+                </div>
+
+                {/* Row 8: Transaction Reference */}
+                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Transaction Reference
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug break-all">
+                    {data.transRef}
+                  </span>
+                </div>
+
+                {/* Row 9: Provider Reference */}
+                <div className="py-[12px] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                    Provider Reference
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug break-all">
+                    {data.providerRef}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* SCALLOPED / PERFORATED WHITE RECEIPT TEAR AT BOTTOM */}
+            <div className="w-full leading-none overflow-hidden select-none pointer-events-none -mt-[1px]">
+              <svg
+                className="w-full h-[10px] block text-white fill-current"
+                viewBox="0 0 390 10"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d={generatePerforatedCutPath(390)} />
+              </svg>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Action button bar */}
+        <div className="w-full max-w-[430px] mt-6 flex flex-col gap-3">
+          <button
+            onClick={handleDownload}
+            disabled={downloading}
+            className="w-full py-3.5 bg-[#005AE8] hover:bg-blue-700 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
+          >
+            <Download className="w-4 h-4" />
+            <span>{downloading ? 'Generating PNG...' : 'Download High-Res Receipt (PNG)'}</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/nigeria-banks/moniepoint/receipt')}
+            className="w-full py-3.5 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm rounded-2xl border border-slate-200 shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all"
+          >
+            <Edit3 className="w-4 h-4 text-slate-500" />
+            <span>Generate Another Moniepoint Receipt</span>
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+};
