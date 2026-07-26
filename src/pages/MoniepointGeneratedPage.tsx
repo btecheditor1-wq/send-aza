@@ -317,7 +317,7 @@ Ref: ${data.transRef}`;
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2 }}
           ref={receiptRef}
-          className="relative w-full max-w-[430px] bg-[#005AE8] pt-[36px] px-[20px] pb-[56px] overflow-hidden rounded-[34px] shadow-2xl text-slate-900 select-none my-auto"
+          className="relative w-full max-w-[440px] bg-[#005AE8] pt-[32px] px-[16px] sm:px-[18px] pb-[48px] overflow-hidden rounded-[32px] shadow-2xl text-slate-900 select-none my-auto"
           style={{
             fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           }}
@@ -325,32 +325,32 @@ Ref: ${data.transRef}`;
           {/* BACKGROUND GOLD BRAND CURVES */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
-            viewBox="0 0 430 880"
+            viewBox="0 0 440 880"
             preserveAspectRatio="none"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             {/* Top Right Arc Swoosh */}
-            <circle cx="410" cy="-20" r="160" stroke="#F5B400" strokeWidth="32" fill="none" />
+            <circle cx="420" cy="-20" r="160" stroke="#F5B400" strokeWidth="32" fill="none" />
             {/* Left Mid Arc Accent */}
             <circle cx="-40" cy="420" r="110" stroke="#F5B400" strokeWidth="26" fill="none" />
             {/* Bottom Right Arc Swoosh */}
-            <circle cx="420" cy="850" r="120" stroke="#F5B400" strokeWidth="30" fill="none" />
+            <circle cx="430" cy="850" r="120" stroke="#F5B400" strokeWidth="30" fill="none" />
           </svg>
 
           {/* HEADER BRANDING */}
-          <div className="relative z-10 pb-[28px] flex items-center justify-center gap-3">
+          <div className="relative z-10 pb-[24px] flex items-center justify-center gap-2.5">
             {/* Moniepoint M logo badge */}
-            <div className="w-[52px] h-[52px] bg-white rounded-[16px] flex items-center justify-center shadow-xs shrink-0">
-              <span className="text-[#005AE8] text-[28px] font-[900] tracking-tighter leading-none select-none">M</span>
+            <div className="w-[44px] h-[44px] bg-white rounded-[14px] flex items-center justify-center shadow-xs shrink-0">
+              <span className="text-[#005AE8] text-[24px] font-[900] tracking-tighter leading-none select-none">M</span>
             </div>
 
             {/* Brand Titles */}
             <div className="flex flex-col">
-              <h1 className="text-white text-[30px] font-[800] tracking-[-0.5px] leading-none">
+              <h1 className="text-white text-[26px] font-[800] tracking-[-0.5px] leading-none">
                 Moniepoint
               </h1>
-              <p className="mt-[5px] text-[8.5px] font-[700] tracking-[3.5px] text-white/90 uppercase">
+              <p className="mt-[4px] text-[8px] font-[700] tracking-[3px] text-white/90 uppercase">
                 MICROFINANCE BANK
               </p>
             </div>
@@ -359,116 +359,116 @@ Ref: ${data.transRef}`;
           {/* WHITE MAIN CARD */}
           <div className="relative z-10">
             {/* White Card Body */}
-            <div className="bg-white rounded-t-[28px] pt-[28px] px-[20px] pb-[4px]">
+            <div className="bg-white rounded-t-[26px] pt-[22px] px-[14px] pb-[4px]">
               {/* TOP CARD SECTION: BADGE + AMOUNT + M ICON */}
-              <div className="flex justify-between items-start mb-[20px]">
-                <div>
-                  <div className="inline-flex items-center justify-center px-[12px] py-[6px] rounded-[6px] text-[12px] font-[700] tracking-[0.4px] bg-[#D6E4FF] text-[#005AE8] uppercase">
+              <div className="flex justify-between items-start mb-[16px] gap-2">
+                <div className="flex-1 min-w-0 pr-1">
+                  <div className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[13px] font-[700] tracking-[0.3px] bg-[#D6E4FF] text-[#005AE8] uppercase">
                     DEBIT
                   </div>
-                  <div className="mt-[10px] text-[40px] sm:text-[44px] font-[900] tracking-[-1.5px] text-[#0A0A0A] leading-none">
+                  <div className="mt-[8px] text-[36px] sm:text-[40px] font-[800] tracking-[-1px] text-[#0A0A0A] leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                     ₦{formattedAmount}
                   </div>
                 </div>
 
                 {/* Right Moniepoint Logo Badge */}
-                <div className="w-[50px] h-[50px] rounded-[15px] bg-[#005AE8] flex justify-center items-center shrink-0 shadow-xs">
-                  <span className="text-white text-[26px] font-[900] tracking-tighter leading-none select-none">M</span>
+                <div className="w-[46px] h-[46px] rounded-[14px] bg-[#005AE8] flex justify-center items-center shrink-0 shadow-xs">
+                  <span className="text-white text-[24px] font-[900] tracking-tighter leading-none select-none">M</span>
                 </div>
               </div>
 
               {/* PANEL WITH TRANSACTION DETAILS */}
-              <div className="bg-[#F3F6FA] rounded-[20px] px-[20px] py-[6px]">
+              <div className="bg-[#F3F6FA] rounded-[18px] px-[16px] py-[4px]">
                 {/* Row 1: Transaction Type */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[5px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Transaction Type
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[12px] py-[5px] rounded-[6px] text-[13px] font-[700] bg-[#E2ECFF] text-[#005AE8]">
+                    <span className="inline-flex items-center justify-center px-[10px] py-[3px] rounded-[5px] text-[14px] font-[700] bg-[#E2ECFF] text-[#005AE8]">
                       {data.transactionType || 'Transfer'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 2: Transaction Status */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[5px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Transaction Status
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[12px] py-[5px] rounded-[6px] text-[13px] font-[700] bg-[#DCF5E3] text-[#15A047]">
+                    <span className="inline-flex items-center justify-center px-[10px] py-[3px] rounded-[5px] text-[14px] font-[700] bg-[#DCF5E3] text-[#15A047]">
                       {data.transactionStatus || 'Successful'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 3: Sender Name */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Sender Name
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug uppercase">
                     {data.senderName}
                   </span>
                 </div>
 
                 {/* Row 4: Source Institution */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Source Institution
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug uppercase">
                     {data.sourceInstitution || 'MONIEPOINT'}
                   </span>
                 </div>
 
                 {/* Row 5: Beneficiary */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Beneficiary
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug uppercase">
                     {data.beneficiaryName} | {data.beneficiaryAccount}
                   </span>
                 </div>
 
                 {/* Row 6: Beneficiary Institution */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Beneficiary Institution
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug uppercase">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug uppercase">
                     {data.beneficiaryInstitution}
                   </span>
                 </div>
 
                 {/* Row 7: Transaction Date */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Transaction Date
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug">
                     {formattedDateTime}
                   </span>
                 </div>
 
                 {/* Row 8: Transaction Reference */}
-                <div className="py-[12px] border-b border-[#E5EBF3] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] border-b border-[#E5EBF3] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Transaction Reference
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug break-all">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug break-all">
                     {data.transRef}
                   </span>
                 </div>
 
                 {/* Row 9: Provider Reference */}
-                <div className="py-[12px] flex flex-col items-start">
-                  <span className="text-[13px] font-[400] text-[#7E8590] mb-[3px]">
+                <div className="py-[8px] flex flex-col items-start">
+                  <span className="text-[14px] font-[400] text-[#8B8F97] mb-[2px]">
                     Provider Reference
                   </span>
-                  <span className="text-[14px] sm:text-[15px] font-[500] text-[#111111] leading-snug break-all">
+                  <span className="text-[15px] font-[500] text-[#111111] leading-snug break-all">
                     {data.providerRef}
                   </span>
                 </div>
@@ -479,11 +479,11 @@ Ref: ${data.transRef}`;
             <div className="w-full leading-none overflow-hidden select-none pointer-events-none -mt-[1px]">
               <svg
                 className="w-full h-[10px] block text-white fill-current"
-                viewBox="0 0 390 10"
+                viewBox="0 0 440 10"
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d={generatePerforatedCutPath(390)} />
+                <path d={generatePerforatedCutPath(440)} />
               </svg>
             </div>
           </div>
