@@ -369,15 +369,15 @@ Ref: ${data.transRef}`;
           {/* WHITE MAIN CARD */}
           <div className="relative z-10">
             {/* White Card Body */}
-            <div className="bg-white rounded-t-[16px] pt-[16px] px-[12px] sm:px-[14px] pb-[0px]">
+            <div className="bg-white rounded-t-[20px] pt-[20px] px-[16px] pb-[0px]">
               {/* TOP CARD SECTION: BADGE + AMOUNT + M ICON */}
-              <div className="flex justify-between items-start mb-[12px] gap-2">
+              <div className="flex justify-between items-start mb-[18px] gap-2">
                 <div className="flex-1 min-w-0 pr-1">
-                  <div className="inline-flex items-center justify-center px-[10px] py-[6px] rounded-[6px] text-[12px] font-[700] tracking-[0.3px] bg-[#D6E4FF] text-[#005AE8] uppercase">
+                  <div className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[12px] font-[700] tracking-[0.3px] bg-[#D6E4FF] text-[#005AE8] uppercase">
                     DEBIT
                   </div>
                   <div
-                    className="mt-[8px] font-[800] tracking-[-0.5px] text-[#000000] leading-none whitespace-nowrap"
+                    className="mt-[8px] font-[800] tracking-[-0.8px] text-[#000000] leading-none whitespace-nowrap"
                     style={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: getAmountFontSize(formattedAmount),
@@ -394,97 +394,97 @@ Ref: ${data.transRef}`;
               </div>
 
               {/* PANEL WITH TRANSACTION DETAILS */}
-              <div className="bg-[#F3F6FA] rounded-[16px] px-[16px] py-[4px]">
+              <div className="bg-[#F3F5F9] rounded-[18px] px-[18px] py-[6px]">
                 {/* Row 1: Transaction Type */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Transaction Type
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[10px] py-[6px] rounded-[6px] text-[12px] font-[600] bg-[#E2ECFF] text-[#005AE8]">
+                    <span className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[12px] font-[600] bg-[#E2ECFF] text-[#005AE8]">
                       {data.transactionType || 'Transfer'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 2: Transaction Status */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Transaction Status
                   </span>
                   <div>
-                    <span className="inline-flex items-center justify-center px-[10px] py-[6px] rounded-[6px] text-[12px] font-[600] bg-[#DCF5E3] text-[#15A047]">
+                    <span className="inline-flex items-center justify-center px-[10px] py-[4px] rounded-[5px] text-[12px] font-[600] bg-[#DCF5E3] text-[#15A047]">
                       {data.transactionStatus || 'Successful'}
                     </span>
                   </div>
                 </div>
 
                 {/* Row 3: Sender Name */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Sender Name
                   </span>
-                  <span className="text-[14px] font-[500] text-[#000000] leading-snug uppercase">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.senderName}
                   </span>
                 </div>
 
                 {/* Row 4: Source Institution */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Source Institution
                   </span>
-                  <span className="text-[14px] font-[500] text-[#000000] leading-snug uppercase">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.sourceInstitution || 'MONIEPOINT'}
                   </span>
                 </div>
 
                 {/* Row 5: Beneficiary */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Beneficiary
                   </span>
-                  <span className="text-[14px] font-[500] text-[#000000] leading-snug uppercase">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.beneficiaryName} | {data.beneficiaryAccount}
                   </span>
                 </div>
 
                 {/* Row 6: Beneficiary Institution */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Beneficiary Institution
                   </span>
-                  <span className="text-[14px] font-[500] text-[#000000] leading-snug uppercase">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.beneficiaryInstitution}
                   </span>
                 </div>
 
                 {/* Row 7: Transaction Date */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Transaction Date
                   </span>
-                  <span className="text-[14px] font-[500] text-[#000000] leading-snug">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {formattedDateTime}
                   </span>
                 </div>
 
                 {/* Row 8: Transaction Reference */}
-                <div className="py-[7px] border-b border-[#EDF1F5] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] border-b border-[#EDF1F5] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Transaction Reference
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug break-all">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.transRef}
                   </span>
                 </div>
 
                 {/* Row 9: Provider Reference */}
-                <div className="py-[7px] flex flex-col items-start">
-                  <span className="text-[13px] font-[500] text-[#8D8D8D] mb-[6px]">
+                <div className="py-[11px] flex flex-col items-start">
+                  <span className="text-[13px] font-[400] text-[#8B8F97] mb-[4px]">
                     Provider Reference
                   </span>
-                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug break-all">
+                  <span className="text-[13.5px] font-[500] text-[#000000] leading-snug tracking-[-0.2px] whitespace-nowrap overflow-hidden text-ellipsis w-full">
                     {data.providerRef}
                   </span>
                 </div>
