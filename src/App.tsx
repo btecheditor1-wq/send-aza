@@ -12,6 +12,11 @@ import { MoniepointReceiptPage } from './pages/MoniepointReceiptPage';
 import { MoniepointGeneratedPage } from './pages/MoniepointGeneratedPage';
 import { GCashReceiptPage } from './pages/GCashReceiptPage';
 import { GCashGeneratedPage } from './pages/GCashGeneratedPage';
+import { CashAppSelectorPage } from './pages/CashAppSelectorPage';
+import { CashAppTemplate1Page } from './pages/CashAppTemplate1Page';
+import { CashAppTemplate1GeneratedPage } from './pages/CashAppTemplate1GeneratedPage';
+import { CashAppTemplate2Page } from './pages/CashAppTemplate2Page';
+import { CashAppTemplate2GeneratedPage } from './pages/CashAppTemplate2GeneratedPage';
 
 export default function App() {
   return (
@@ -52,6 +57,16 @@ export default function App() {
           {/* Page 10: GCash Form & Generated Pages */}
           <Route path="/gcash/receipt" element={<GCashReceiptPage />} />
           <Route path="/gcash/generated" element={<GCashGeneratedPage />} />
+
+          {/* Cash App Routes */}
+          <Route path="/cashapp" element={<CashAppSelectorPage />} />
+          <Route path="/cashapp/index.html" element={<CashAppSelectorPage />} />
+          <Route path="/cashapp/template1" element={<CashAppTemplate1Page />} />
+          <Route path="/cashapp/template1.html" element={<CashAppTemplate1Page />} />
+          <Route path="/cashapp/template1/generated" element={<CashAppTemplate1GeneratedPage />} />
+          <Route path="/cashapp/template2" element={<CashAppTemplate2Page />} />
+          <Route path="/cashapp/template2.html" element={<CashAppTemplate2Page />} />
+          <Route path="/cashapp/template2/generated" element={<CashAppTemplate2GeneratedPage />} />
 
           {/* Page 8: Not Available */}
           <Route path="/not-available" element={<NotAvailablePage />} />

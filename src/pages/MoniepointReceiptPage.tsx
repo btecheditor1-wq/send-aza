@@ -20,12 +20,12 @@ export const MoniepointReceiptPage: React.FC = () => {
   const navigate = useNavigate();
 
   // Form state
-  const [amount, setAmount] = useState('190.00');
-  const [senderName, setSenderName] = useState('RAKIYA GEORGE');
-  const [sourceInstitution, setSourceInstitution] = useState('MONIEPOINT');
-  const [beneficiaryName, setBeneficiaryName] = useState('MUHAMMAD BELLO');
-  const [beneficiaryAccount, setBeneficiaryAccount] = useState('8062827392');
-  const [beneficiaryInstitution, setBeneficiaryInstitution] = useState('MOMO PSB');
+  const [amount, setAmount] = useState('');
+  const [senderName, setSenderName] = useState('');
+  const [sourceInstitution, setSourceInstitution] = useState('');
+  const [beneficiaryName, setBeneficiaryName] = useState('');
+  const [beneficiaryAccount, setBeneficiaryAccount] = useState('');
+  const [beneficiaryInstitution, setBeneficiaryInstitution] = useState('');
   const [transactionType, setTransactionType] = useState('Transfer');
   const [transactionStatus, setTransactionStatus] = useState('Successful');
   const [narration, setNarration] = useState('');
@@ -64,21 +64,35 @@ export const MoniepointReceiptPage: React.FC = () => {
     return `09040${generateRandomDigits(25)}`;
   };
 
+  const formatMoniepointAmount = (rawAmount: string): string => {
+    if (!rawAmount || !rawAmount.trim()) return '0.00';
+    const cleaned = rawAmount.replace(/[^0-9.]/g, '');
+    if (!cleaned) return '0.00';
+
+    if (cleaned.includes('.')) {
+      const parts = cleaned.split('.');
+      const intVal = parts[0] ? parts[0] : '0';
+      let decPart = parts[1] || '00';
+      if (decPart.length === 1) decPart += '0';
+      else if (decPart.length > 2) decPart = decPart.slice(0, 2);
+      return `${intVal}.${decPart}`;
+    } else {
+      return `${cleaned}.00`;
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    let cleanedAmount = amount.replace(/[^0-9.]/g, '');
-    if (!cleanedAmount) {
-      cleanedAmount = '190.00';
-    }
+    const formattedAmt = formatMoniepointAmount(amount);
 
     const formData = {
-      amount: cleanedAmount,
-      senderName,
-      sourceInstitution,
-      beneficiaryName,
-      beneficiaryAccount,
-      beneficiaryInstitution,
+      amount: formattedAmt,
+      senderName: senderName.trim() || 'SENDER NAME',
+      sourceInstitution: sourceInstitution.trim() || 'MONIEPOINT',
+      beneficiaryName: beneficiaryName.trim() || 'BENEFICIARY NAME',
+      beneficiaryAccount: beneficiaryAccount.trim() || '0000000000',
+      beneficiaryInstitution: beneficiaryInstitution.trim() || 'MOMO PSB',
       transactionType,
       transactionStatus,
       narration: narration.trim(),

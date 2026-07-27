@@ -20,13 +20,13 @@ export const StanbicBankReceiptPage: React.FC = () => {
   const navigate = useNavigate();
 
   // Form states
-  const [amount, setAmount] = useState('50000');
-  const [senderName, setSenderName] = useState('CHINEDU EZE');
-  const [senderAccount, setSenderAccount] = useState('0123456789');
-  const [receiverAccount, setReceiverAccount] = useState('0987654321');
-  const [receiverName, setReceiverName] = useState('OLUWASEUN ADEBAYO');
-  const [receiverBank, setReceiverBank] = useState('GTBank');
-  const [narration, setNarration] = useState('Payment for goods');
+  const [amount, setAmount] = useState('');
+  const [senderName, setSenderName] = useState('');
+  const [senderAccount, setSenderAccount] = useState('');
+  const [receiverAccount, setReceiverAccount] = useState('');
+  const [receiverName, setReceiverName] = useState('');
+  const [receiverBank, setReceiverBank] = useState('');
+  const [narration, setNarration] = useState('');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(() => {
     const now = new Date();

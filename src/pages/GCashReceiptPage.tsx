@@ -47,9 +47,9 @@ export const GCashReceiptPage: React.FC = () => {
   const defaultFormattedDate = formatGCashDate(now);
 
   // Form States
-  const [recipientName, setRecipientName] = useState('BE....GE');
-  const [recipientNumber, setRecipientNumber] = useState('101949494949');
-  const [amount, setAmount] = useState('1,000,000.00');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientNumber, setRecipientNumber] = useState('');
+  const [amount, setAmount] = useState('');
   const [refNumber, setRefNumber] = useState(generate13DigitRef());
   const [customDate, setCustomDate] = useState(defaultFormattedDate);
   const [carbonText, setCarbonText] = useState('131g (gCO2e)');

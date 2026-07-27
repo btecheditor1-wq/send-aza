@@ -70,10 +70,11 @@ export const OTHER_SERVICES: SelectionItem[] = [
     id: 'cashapp',
     name: 'Cash App',
     image: '/assets/cashapp.png',
-    available: false,
-    targetPath: '/not-available',
+    available: true,
+    targetPath: '/cashapp',
     subtext: '$Cashtag Payout',
-    brandColor: 'from-emerald-500/10 to-green-500/10'
+    brandColor: 'from-emerald-500/10 to-green-500/10',
+    badge: 'Templates'
   },
   {
     id: 'paypal',

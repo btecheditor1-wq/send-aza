@@ -28,12 +28,12 @@ export const AccessBankReceiptPage: React.FC = () => {
   const defaultTime = now.toTimeString().slice(0, 5);
 
   // Form States
-  const [amount, setAmount] = useState('10,000.00');
-  const [senderName, setSenderName] = useState('BENJAMIN GEORGE');
-  const [receiverName, setReceiverName] = useState('RAKIYA GEORGE');
-  const [receiverAccount, setReceiverAccount] = useState('0116464944');
-  const [receiverBank, setReceiverBank] = useState('OPAY LIMITED');
-  const [narration, setNarration] = useState('BENNIE');
+  const [amount, setAmount] = useState('');
+  const [senderName, setSenderName] = useState('');
+  const [receiverName, setReceiverName] = useState('');
+  const [receiverAccount, setReceiverAccount] = useState('');
+  const [receiverBank, setReceiverBank] = useState('');
+  const [narration, setNarration] = useState('');
   const [date, setDate] = useState(defaultDate);
   const [time, setTime] = useState(defaultTime);
 

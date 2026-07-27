@@ -149,10 +149,25 @@ export const MoniepointGeneratedPage: React.FC = () => {
     }
   };
 
-  const formattedAmount = Number(data.amount).toLocaleString('en-NG', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const formatMoniepointAmount = (rawAmount: string): string => {
+    if (!rawAmount || !rawAmount.trim()) return '0.00';
+    const cleaned = rawAmount.replace(/[^0-9.]/g, '');
+    if (!cleaned) return '0.00';
+
+    if (cleaned.includes('.')) {
+      const parts = cleaned.split('.');
+      const intVal = parts[0] ? Number(parts[0]).toLocaleString('en-NG') : '0';
+      let decPart = parts[1] || '00';
+      if (decPart.length === 1) decPart += '0';
+      else if (decPart.length > 2) decPart = decPart.slice(0, 2);
+      return `${intVal}.${decPart}`;
+    } else {
+      const intVal = Number(cleaned).toLocaleString('en-NG');
+      return `${intVal}.00`;
+    }
+  };
+
+  const formattedAmount = formatMoniepointAmount(data.amount || '0.00');
 
   const getAmountFontSize = (amountStr: string) => {
     const fullStr = '₦' + amountStr;
