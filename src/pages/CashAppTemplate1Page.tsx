@@ -3,16 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
   ArrowLeft,
-  DollarSign,
   User,
   Calendar,
   Clock,
-  CheckCircle2,
-  FileText,
-  CreditCard,
-  Globe,
   Sparkles,
-  Shuffle,
 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 
@@ -55,7 +49,6 @@ export const CashAppTemplate1Page: React.FC = () => {
   // All form fields start EMPTY as requested by the user
   const [recipientName, setRecipientName] = useState('');
   const [cashtag, setCashtag] = useState('');
-  const [paymentFor, setPaymentFor] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(() => {
@@ -63,19 +56,7 @@ export const CashAppTemplate1Page: React.FC = () => {
     return now.toTimeString().slice(0, 5);
   });
   const [status, setStatus] = useState('Completed');
-  const [refNumber, setRefNumber] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
   const [notes, setNotes] = useState('');
-  const [websiteName, setWebsiteName] = useState('');
-
-  const generateRandomRef = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '#C-';
-    for (let i = 0; i < 9; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    setRefNumber(result);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,15 +67,15 @@ export const CashAppTemplate1Page: React.FC = () => {
       templateId: 'template1',
       recipientName: recipientName.trim(),
       cashtag: cashtag.trim(),
-      paymentFor: paymentFor.trim(),
+      paymentFor: '',
       amount: formattedAmount,
       date,
       time,
       status: status.trim() || 'Completed',
-      refNumber: refNumber.trim() || `#C-${Math.floor(10000000 + Math.random() * 90000000)}`,
-      paymentMethod: paymentMethod.trim(),
+      refNumber: `#C-${Math.floor(10000000 + Math.random() * 90000000)}`,
+      paymentMethod: '',
       notes: notes.trim(),
-      websiteName: websiteName.trim() || 'cash.app',
+      websiteName: 'cash.app',
     };
 
     sessionStorage.setItem('cashapp_template1_data', JSON.stringify(formData));
@@ -197,23 +178,6 @@ export const CashAppTemplate1Page: React.FC = () => {
               </div>
             </div>
 
-            {/* Payment For */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Payment For
-              </label>
-              <div className="relative">
-                <FileText className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="e.g. For Services / Dinner"
-                  value={paymentFor}
-                  onChange={(e) => setPaymentFor(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-                />
-              </div>
-            </div>
-
             {/* Date & Time Grid */}
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -259,50 +223,8 @@ export const CashAppTemplate1Page: React.FC = () => {
               >
                 <option value="Completed">Completed</option>
                 <option value="Pending">Pending</option>
-                <option value="Processing">Processing</option>
                 <option value="Failed">Failed</option>
               </select>
-            </div>
-
-            {/* Payment Method */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Payment Method
-              </label>
-              <div className="relative">
-                <CreditCard className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="e.g. Cash Balance or Visa Debit **** 1234"
-                  value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-                />
-              </div>
-            </div>
-
-            {/* Reference Number */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Reference Number
-                </label>
-                <button
-                  type="button"
-                  onClick={generateRandomRef}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 hover:text-emerald-700"
-                >
-                  <Shuffle className="w-3 h-3" />
-                  <span>Random</span>
-                </button>
-              </div>
-              <input
-                type="text"
-                placeholder="e.g. #C-98234729"
-                value={refNumber}
-                onChange={(e) => setRefNumber(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-              />
             </div>
 
             {/* Notes */}
@@ -317,23 +239,6 @@ export const CashAppTemplate1Page: React.FC = () => {
                 onChange={(e) => setNotes(e.target.value)}
                 className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
               />
-            </div>
-
-            {/* Website Name */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Website Name
-              </label>
-              <div className="relative">
-                <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="e.g. cash.app"
-                  value={websiteName}
-                  onChange={(e) => setWebsiteName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-                />
-              </div>
             </div>
           </div>
 
