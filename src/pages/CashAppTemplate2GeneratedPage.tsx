@@ -1,22 +1,36 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'motion/react';
 import {
-  ArrowLeft,
-  Download,
-  Share2,
   Edit3,
-  CheckCircle2,
+  Download,
   Copy,
   Check,
-  Globe,
-  ShieldCheck,
-  CheckCircle,
 } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import html2canvas from 'html2canvas';
 import { Navbar } from '../components/Navbar';
-import { CashAppReceiptData, formatCashAppAmount } from './CashAppTemplate1Page';
+import { CashAppReceiptData } from './CashAppTemplate1Page';
+
+const formatTemplate2Amount = (raw: string): string => {
+  if (!raw || !raw.trim()) return '1,500';
+  let cleaned = raw.trim();
+  if (cleaned.startsWith('$')) {
+    cleaned = cleaned.substring(1).trim();
+  }
+  const numOnly = cleaned.replace(/,/g, '');
+  if (isNaN(Number(numOnly))) return cleaned;
+
+  if (numOnly.includes('.')) {
+    const parts = numOnly.split('.');
+    const integerPart = Number(parts[0]).toLocaleString('en-US');
+    const decimalPart = parts[1];
+    if (decimalPart === '00' || decimalPart === '0' || !decimalPart) {
+      return integerPart;
+    }
+    return `${integerPart}.${decimalPart}`;
+  }
+  return Number(numOnly).toLocaleString('en-US');
+};
 
 export const CashAppTemplate2GeneratedPage: React.FC = () => {
   const navigate = useNavigate();
@@ -44,19 +58,18 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
 
   useEffect(() => {
     if (!data) {
-      // Sample fallback
       setData({
         templateId: 'template2',
-        recipientName: 'JANE SMITH',
-        cashtag: 'janesmith',
-        paymentFor: 'Graphic Design Work',
-        amount: '250.00',
+        recipientName: 'Anthony Tenebruso',
+        cashtag: '',
+        paymentFor: '',
+        amount: '1,500',
         date: new Date().toISOString().split('T')[0],
-        time: '16:15',
+        time: '10:01',
         status: 'Completed',
-        refNumber: 'CAS-8912349012',
-        paymentMethod: 'Visa Debit Card (...9921)',
-        notes: 'Instant payment received',
+        refNumber: '',
+        paymentMethod: '',
+        notes: '',
         websiteName: 'cash.app',
       });
     }
@@ -64,44 +77,15 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
 
   if (!data) return null;
 
-  // Format date display: e.g. "Jul 26, 2026, 4:15 PM"
-  const formatDateDisplay = (dateStr: string, timeStr: string) => {
-    try {
-      const d = new Date(`${dateStr}T${timeStr || '12:00'}`);
-      if (isNaN(d.getTime())) return `${dateStr} ${timeStr}`;
+  const displayAmount = formatTemplate2Amount(data.amount);
+  const recipientName = data.recipientName || 'Anthony Tenebruso';
+  const displayTime = data.time || '10:01';
 
-      const monthNames = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-      ];
-      const month = monthNames[d.getMonth()];
-      const day = d.getDate();
-      const year = d.getFullYear();
-
-      let hours = d.getHours();
-      const minutes = d.getMinutes().toString().padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12 || 12;
-
-      return `${month} ${day}, ${year}, ${hours}:${minutes} ${ampm}`;
-    } catch {
-      return `${dateStr} ${timeStr}`;
-    }
-  };
-
-  const formattedDateTime = formatDateDisplay(data.date, data.time);
-  const formattedAmount = formatCashAppAmount(data.amount);
-
-  const initialLetter = data.recipientName
-    ? data.recipientName.trim().charAt(0).toUpperCase()
-    : 'C';
-
-  const handleCopyRef = () => {
-    if (data.refNumber) {
-      navigator.clipboard.writeText(data.refNumber);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+  const handleCopyText = () => {
+    const text = `Sent! $${displayAmount} will be deposited once ${recipientName} completes the payment.`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleDownload = async () => {
@@ -125,7 +109,7 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
       }
 
       const link = document.createElement('a');
-      link.download = `CashApp_Template2_${data.recipientName || 'Receipt'}.png`;
+      link.download = `CashApp_Sent_${recipientName.replace(/\s+/g, '_')}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -144,7 +128,7 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate('/cashapp/template2.html')}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs transition-colors cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5 text-emerald-600" />
             <span>Edit Form</span>
@@ -152,8 +136,8 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handleCopyRef}
-              className="inline-flex items-center gap-1 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors"
+              onClick={handleCopyText}
+              className="inline-flex items-center gap-1 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs hover:bg-slate-50 transition-colors cursor-pointer"
             >
               {copied ? (
                 <>
@@ -163,7 +147,7 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Copy Ref</span>
+                  <span>Copy Text</span>
                 </>
               )}
             </button>
@@ -183,96 +167,72 @@ export const CashAppTemplate2GeneratedPage: React.FC = () => {
         <div className="flex justify-center">
           <div
             ref={receiptRef}
-            className="w-full max-w-[400px] bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 text-white"
+            className="w-full max-w-[390px] min-h-[640px] bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden text-slate-900 flex flex-col justify-between relative"
+            style={{
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+              WebkitFontSmoothing: 'antialiased',
+            }}
           >
-            {/* Green Header Banner */}
-            <div className="bg-gradient-to-br from-[#00D632] to-[#00B028] pt-7 pb-12 px-6 text-center relative overflow-hidden">
-              {/* Subtle background circles */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10 blur-xl pointer-events-none" />
-              
-              <div className="inline-flex items-center gap-1.5 bg-black/15 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-white mb-3">
-                <ShieldCheck className="w-3.5 h-3.5 text-white" />
-                <span>Payment Confirmation</span>
-              </div>
-
-              <h2 className="text-sm font-semibold text-emerald-50">
-                Payment To {data.recipientName || 'Recipient'}
-              </h2>
-              <div className="text-4xl font-black text-white tracking-tight mt-1">
-                ${formattedAmount}
+            {/* Status Bar */}
+            <div className="flex justify-between items-center px-6 pt-3 h-[44px]">
+              <span className="text-[17px] font-semibold text-black tracking-[-0.3px]">
+                {displayTime}
+              </span>
+              <div className="flex items-center gap-[6px]">
+                {/* Signal Bars */}
+                <div className="flex items-end gap-[2px] h-[14px]">
+                  <div className="w-[3px] h-[4px] bg-black rounded-[0.5px]" />
+                  <div className="w-[3px] h-[7px] bg-black rounded-[0.5px]" />
+                  <div className="w-[3px] h-[10px] bg-black rounded-[0.5px]" />
+                  <div className="w-[3px] h-[13px] bg-black rounded-[0.5px]" />
+                </div>
+                <span className="text-[12px] font-semibold text-black ml-[2px]">
+                  5G
+                </span>
+                {/* Battery Icon */}
+                <div className="w-[25px] h-[12px] border-[1.2px] border-black rounded-[3px] relative flex items-center p-[1.5px]">
+                  <div className="w-[60%] h-full bg-black rounded-[1px]" />
+                  <div className="w-[1.5px] h-[5px] bg-black absolute -right-[3px] rounded-r-[1px]" />
+                </div>
               </div>
             </div>
 
-            {/* Overlapping Receipt Card */}
-            <div className="-mt-6 mx-4 mb-6 bg-white rounded-2xl p-5 text-slate-900 shadow-xl border border-slate-100 space-y-4">
-              {/* Profile Bar */}
-              <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-                <div className="w-11 h-11 rounded-full bg-[#00D632] text-white flex items-center justify-center font-black text-lg shadow-sm">
-                  {initialLetter}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-extrabold text-slate-900 text-sm truncate">
-                    {data.recipientName || 'Recipient Name'}
-                  </h3>
-                  {data.cashtag && (
-                    <p className="text-xs font-semibold text-slate-400 truncate">
-                      ${data.cashtag.startsWith('$') ? data.cashtag.slice(1) : data.cashtag}
-                    </p>
-                  )}
-                </div>
-                <div className="flex items-center gap-1 text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
-                  <CheckCircle className="w-3.5 h-3.5 fill-emerald-500 text-white" />
-                  <span>{data.status || 'Completed'}</span>
-                </div>
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col items-start px-8 pt-10 pb-6">
+              {/* Check Circle */}
+              <div className="w-[56px] h-[56px] bg-[#00D632] rounded-full flex items-center justify-center mb-6 shadow-2xs">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-[28px] h-[28px]"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
               </div>
 
-              {/* Data Table */}
-              <div className="space-y-3 text-xs">
-                {data.paymentFor && (
-                  <div className="flex items-start justify-between">
-                    <span className="font-semibold text-slate-400">For</span>
-                    <span className="font-bold text-slate-800 text-right max-w-[200px]">
-                      {data.paymentFor}
-                    </span>
-                  </div>
-                )}
+              {/* Message */}
+              <p className="m-0 text-[28px] font-semibold text-[#1a1a1a] leading-[1.25] tracking-[-0.4px]">
+                Sent! ${displayAmount} will be deposited once {recipientName} completes the payment.
+              </p>
+            </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-400">Date & Time</span>
-                  <span className="font-bold text-slate-800">{formattedDateTime}</span>
-                </div>
+            {/* Bottom Section */}
+            <div className="px-6 pb-2">
+              <button
+                type="button"
+                className="w-full h-[54px] bg-[#00D632] text-white text-[17px] font-semibold rounded-[27px] flex items-center justify-center cursor-pointer outline-none tracking-[-0.2px] mb-4 active:opacity-90 transition-opacity"
+              >
+                Done
+              </button>
 
-                {data.paymentMethod && (
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-400">Payment Method</span>
-                    <span className="font-bold text-slate-800">{data.paymentMethod}</span>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-400">Ref Number</span>
-                  <span className="font-bold text-slate-800 font-mono">{data.refNumber}</span>
-                </div>
-
-                {data.notes && (
-                  <div className="flex items-start justify-between">
-                    <span className="font-semibold text-slate-400">Notes</span>
-                    <span className="font-bold text-slate-800 text-right max-w-[200px]">
-                      {data.notes}
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <span className="font-semibold text-slate-400">Website</span>
-                  <span className="font-bold text-emerald-600">{data.websiteName || 'cash.app'}</span>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="pt-2 text-center text-[10px] text-slate-400 border-t border-slate-100 flex items-center justify-center gap-1">
-                <Globe className="w-3 h-3 text-slate-400" />
-                <span>Official Cash App Receipt • {data.websiteName || 'cash.app'}</span>
+              {/* Home Indicator */}
+              <div className="flex justify-center pb-2">
+                <div className="w-[134px] h-[5px] bg-black rounded-[2.5px]" />
               </div>
             </div>
           </div>
