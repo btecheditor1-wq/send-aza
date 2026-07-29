@@ -207,7 +207,7 @@ Payment Type: ${data.paymentType}`;
           <div
             ref={receiptRef}
             id="kuda-receipt-card"
-            className="w-full max-w-[330px] bg-white p-[18px_16px_12px] shadow-xl border border-slate-200 select-none"
+            className="w-full max-w-[320px] bg-white p-[18px_16px_12px] shadow-xl border border-slate-200 select-none"
             style={{
               fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
               WebkitFontSmoothing: 'antialiased',
@@ -215,11 +215,11 @@ Payment Type: ${data.paymentType}`;
             }}
           >
             {/* Header: Logo top-left (kuda.png) & Transaction Details top-right */}
-            <div className="flex items-center justify-between mb-[24px]">
+            <div className="flex items-center justify-between mb-[20px]">
               <div className="flex items-center">
-                <img src="/kuda.png" alt="Kuda" className="h-[34px] w-auto block object-contain" />
+                <img src="/kuda.png" alt="Kuda" className="h-[22px] w-auto block object-contain" />
               </div>
-              <div className="text-[12px] font-normal text-[#555]">
+              <div className="text-[11.7px] font-normal text-[#555]">
                 Transaction Details
               </div>
             </div>
@@ -240,7 +240,7 @@ Payment Type: ${data.paymentType}`;
               <div className="text-[10.8px] text-[#bbb] font-normal shrink-0 pr-[10px] leading-[1.4]">
                 Beneficiary Details
               </div>
-              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] word-break-all max-w-[190px]">
+              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] word-break-all max-w-[180px]">
                 {data.beneficiaryName}
                 <span className="block text-[9.9px] text-[#bbb] font-normal mt-[2px]">
                   {data.beneficiaryBank} | {data.beneficiaryAccount}
@@ -253,7 +253,7 @@ Payment Type: ${data.paymentType}`;
               <div className="text-[10.8px] text-[#bbb] font-normal shrink-0 pr-[10px] leading-[1.4]">
                 Sender Details
               </div>
-              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] word-break-all max-w-[190px]">
+              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] word-break-all max-w-[180px]">
                 {data.senderName}
                 <span className="block text-[9.9px] text-[#bbb] font-normal mt-[2px]">
                   {data.senderBank} | {data.senderAccount}
@@ -309,7 +309,7 @@ Payment Type: ${data.paymentType}`;
               <div className="text-[10.8px] text-[#bbb] font-normal shrink-0 pr-[10px] leading-[1.4]">
                 Transaction Reference
               </div>
-              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] break-all max-w-[160px]">
+              <div className="text-right text-[10.8px] text-[#444] font-normal leading-[1.4] break-all max-w-[155px]">
                 {data.transRef}
               </div>
             </div>
@@ -325,25 +325,17 @@ Payment Type: ${data.paymentType}`;
             </div>
 
             {/* Promo Banner ("Not on Kuda?") */}
-            {/* Centered squarish light purple container matching original image */}
-            <div className="w-[235px] bg-[#f0f0fa] rounded-[20px] p-[20px_16px] mx-auto flex items-center justify-center gap-[14px] mt-[20px] mb-[18px]">
-              <div className="w-[66px] h-[66px] bg-[#2b0854] rounded-[18px] shrink-0 overflow-hidden flex items-center justify-center p-0 shadow-2xs">
+            <div className="flex items-center gap-[10px] bg-[#f0f0f8] rounded-[10px] p-[12px] mt-[16px] mb-[14px]">
+              <div className="w-[40px] h-[40px] shrink-0 overflow-hidden rounded-[8px]">
                 <img
                   src="/kuda2.png"
                   alt="Kuda"
-                  className="w-full h-full object-cover block"
+                  className="w-full h-full object-cover block rounded-[8px]"
                 />
               </div>
-              <div className="flex flex-col justify-center text-left">
-                <div className="text-[13.5px] font-bold text-[#2b0854] leading-[1.25] tracking-[-0.2px] mb-[2px]">
-                  Not on Kuda?
-                </div>
-                <div className="text-[11.5px] font-bold text-[#2b0854] leading-[1.3] tracking-[-0.2px]">
-                  Tap here to<br />
-                  download the<br />
-                  money app for<br />
-                  Africans
-                </div>
+              <div className="text-[10.8px] font-semibold text-[#3a1a6e] leading-[1.45] text-left">
+                Not on Kuda?<br />
+                Tap here to download the money app for Africans
               </div>
             </div>
 
