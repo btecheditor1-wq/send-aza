@@ -215,11 +215,11 @@ Payment Type: ${data.paymentType}`;
             }}
           >
             {/* Header: Logo top-left (kuda.png) & Transaction Details top-right */}
-            <div className="flex items-center justify-between mb-[24px]">
-              <div className="flex items-center">
-                <img src="/kuda.png" alt="Kuda" className="h-[48px] w-auto block object-contain" />
+            <div className="flex items-center justify-between mb-[22px]">
+              <div className="flex items-center shrink-0">
+                <img src="/kuda.png" alt="Kuda" className="h-[24px] sm:h-[26px] w-auto block object-contain" />
               </div>
-              <div className="text-[17px] font-normal text-[#222]">
+              <div className="text-[13px] sm:text-[14px] font-normal text-[#444] whitespace-nowrap">
                 Transaction Details
               </div>
             </div>
