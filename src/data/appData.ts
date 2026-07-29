@@ -218,11 +218,11 @@ export const NIGERIA_BANKS: SelectionItem[] = [
   {
     id: 'kuda',
     name: 'Kuda',
-    image: '/assets/kuda.png',
-    available: false,
-    targetPath: '/not-available',
+    image: '/kuda.png',
+    available: true,
+    targetPath: '/nigeria-banks/kuda/receipt',
     subtext: 'Kuda Microfinance Bank',
     brandColor: 'from-purple-700/10 to-indigo-600/10',
-    badge: 'Digital Bank'
+    badge: 'Popular MFB'
   }
 ];

@@ -17,6 +17,8 @@ import { CashAppTemplate1Page } from './pages/CashAppTemplate1Page';
 import { CashAppTemplate1GeneratedPage } from './pages/CashAppTemplate1GeneratedPage';
 import { CashAppTemplate2Page } from './pages/CashAppTemplate2Page';
 import { CashAppTemplate2GeneratedPage } from './pages/CashAppTemplate2GeneratedPage';
+import { KudaReceiptPage } from './pages/KudaReceiptPage';
+import { KudaGeneratedPage } from './pages/KudaGeneratedPage';
 
 export default function App() {
   return (
@@ -53,6 +55,11 @@ export default function App() {
 
           {/* Page 9: Moniepoint Generated Receipt Page */}
           <Route path="/nigeria-banks/moniepoint/generated" element={<MoniepointGeneratedPage />} />
+
+          {/* Page 10: Kuda Bank Form & Generated Pages */}
+          <Route path="/nigeria-banks/kuda/receipt" element={<KudaReceiptPage />} />
+          <Route path="/kuda-receipt" element={<KudaReceiptPage />} />
+          <Route path="/nigeria-banks/kuda/generated" element={<KudaGeneratedPage />} />
 
           {/* Page 10: GCash Form & Generated Pages */}
           <Route path="/gcash/receipt" element={<GCashReceiptPage />} />
